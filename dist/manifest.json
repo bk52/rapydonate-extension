@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "Rapydonation",
+    "description": "This extension is test",
+    "version": "1.0",
+    "icons": { 
+        "16": "heart16.png",
+        "48": "heart48.png",
+       "128": "heart128.png" },
+    "browser_action": {
+        "default_icon": "heart48.png",
+        "default_popup": "index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "run_at": "document_idle",
+            "js": ["content.js"]
+        }
+    ],
+    "background": {
+        "persistent": false,
+        "scripts": ["main.js"]
+    },
+	"permissions": ["tabs","activeTab", "storage","<all_urls>"]
+  }
