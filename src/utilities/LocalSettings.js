@@ -13,3 +13,11 @@ export const SetLocalSettings = (data) => {
         });
     })
 }
+
+export const ClearLocalSettings = () => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.clear(function () {
+            resolve();
+        });
+    })
+}
