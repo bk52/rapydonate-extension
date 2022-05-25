@@ -1,7 +1,9 @@
 import { GetProject } from './api/Project';
 import GetCountries from './api/Countries';
+import { GetPaymentMethods } from './api/PaymentMethods';
 import { pageInfo, GetTabInfo } from './utilities/PageInfo';
 import { GetLocalSettings, SetLocalSettings, ClearLocalSettings } from './utilities/LocalSettings';
+
 const PAGES = {
     Settings: "settings",
     Loading: "loading",
@@ -17,7 +19,7 @@ const DONATE_TYPE = {
 }
 let searchPage, loadingPage, settingsPage, notfoundPage, infoPage, paymentPage, errorPage;
 let btnSettings, btnSettingsSave, countryList, txtUserName, btnDonateContinue, btnDonateExit;
-let infoPanel, infoDonateDetails, infoDonateTitle, infoDonatePrice, txtDonateMessage;
+let infoPanel, infoDonateDetails, infoDonateTitle, infoDonatePrice, txtDonateMessage, selectPaymentMethod;
 let projectInfo;
 
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
@@ -56,12 +58,12 @@ const SaveSettings = () => {
     if (countryList.value === "-")
         return alert("Please select your country");
 
-    const [id, code] = countryList.value.split('-');
-    SetLocalSettings({ country: { id, code }, username: userName });
+    const [id, code, currency_code] = countryList.value.split('-');
+    SetLocalSettings({ country: { id, code, currency_code }, username: userName });
     projectInfo ? Navigate(PAGES.Info) : Navigate(PAGES.NotFound);
 }
 
-const onDonateClick = (buttonId) => {
+const onDonateClick = async (buttonId) => {
     infoPanel.classList.add("hidden");
     infoDonateDetails.classList.remove("hidden");
     infoDonateDetails.classList.add("flex");
@@ -77,6 +79,24 @@ const onDonateClick = (buttonId) => {
         if (!txtDonateMessage.classList.contains("hidden"))
             txtDonateMessage.classList.add("hidden");
     }
+
+    const userSettings = await GetLocalSettings();
+    const { id, code, currency_code } = userSettings.settings.country;
+    const paymentData = await GetPaymentMethods(code);
+
+    for (let i = selectPaymentMethod.options.length; i > -1; i--) {
+        selectPaymentMethod.remove(i);
+    }
+    paymentData.map((item) => {
+        let opt = document.createElement("option");
+        opt.value = `${item.value}`;
+        opt.innerHTML = item.title;
+        selectPaymentMethod.appendChild(opt);
+    })
+
+    const donateButtons = document.getElementById("infoDonateButtons");
+    donateButtons.classList.remove("hidden");
+    donateButtons.classList.add("flex");
 }
 
 const Navigate = async (page) => {
@@ -85,20 +105,24 @@ const Navigate = async (page) => {
         loadingPage.classList.remove("hidden");
         loadingPage.classList.add("flex");
         const userSettings = await GetLocalSettings();
+        if (countryList.options.length <= 0) {
+            let defaultOption = document.createElement("option");
+            defaultOption.value = `-`;
+            defaultOption.innerHTML = 'Select';
+            countryList.appendChild(defaultOption);
 
-        if (countryList.options.length > 0) {
             const countries = await GetCountries();
             countries.map((item, index) => {
                 let opt = document.createElement("option");
-                opt.value = `${item.id}-${item.iso_alpha2}`;
+                opt.value = `${item.id}-${item.iso_alpha2}-${item.currency_code}`;
                 opt.innerHTML = item.name;
                 countryList.appendChild(opt);
             });
         }
         if (userSettings.settings.username) {
             txtUserName.value = userSettings.settings.username;
-            const { id, code } = userSettings.settings.country;
-            countryList.value = `${id}-${code}`;
+            const { id, code, currency_code } = userSettings.settings.country;
+            countryList.value = `${id}-${code}-${currency_code}`;
         }
         loadingPage.classList.remove("flex");
         loadingPage.classList.add("hidden");
@@ -185,6 +209,7 @@ const Init = async () => {
         infoDonateTitle = document.getElementById("infoDonateTitle");
         infoDonatePrice = document.getElementById("infoDonatePrice");
         txtDonateMessage = document.getElementById("txtDonateMessage");
+        selectPaymentMethod = document.getElementById("selectPaymentMethod");
 
         btnSettings.addEventListener("click", function () { Navigate(PAGES.Settings) });
         btnSettingsSave.addEventListener("click", function () { SaveSettings(); });
@@ -192,7 +217,9 @@ const Init = async () => {
 
         });
         btnDonateExit.addEventListener("click", function () {
-
+            infoPanel.classList.remove("hidden");
+            infoDonateDetails.classList.remove("flex");
+            infoDonateDetails.classList.add("hidden");
         });
         const userSettings = await GetLocalSettings();
         await GetTabInfo();

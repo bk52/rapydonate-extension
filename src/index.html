@@ -40,7 +40,7 @@
                <input id="txtUserName"  class="p-2 w-48 mt-2 mb-2 text-gray-400 border-none focus:ring-0"/>
                <span class="text-lg text-gray-400">Select your country</span>
                <select name="countryList" id="countryList" class="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
-                    <option value="-">Select</option>
+                    <!-- <option value="-">Select</option> -->
                </select>
                <div id="btnSettingsSave" class="w-48 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-gray-400 hover:text-gray-600">Save</div>
             </div>
@@ -60,10 +60,13 @@
                     <div id="infoPageButtons" class="flex flex-row w-full mt-4 justify-evenly"></div>
                 </div>
                 <div id="infoPageDonateDetails" class="hidden flex-col items-center px-2">
-                    <div id="infoDonateTitle" class="w-full text-lg mt-6 text-center text-gray-700">📭 I have message for you</div>
-                    <div id="infoDonatePrice" class="w-full text-xl mt-4 text-center text-black font-bold">4 $</div>
+                    <div id="infoDonateTitle" class="w-full text-lg mt-6 text-center text-gray-700"></div>
+                    <div id="infoDonatePrice" class="w-full text-xl mt-4 text-center text-black font-bold"></div>
                     <input id="txtDonateMessage" class="hidden p-2 w-full mt-4 text-gray-400 border-none focus:ring-0" placeholder="Max. 180 character" maxlength="180"/>
-                    <div class="flex px-2">
+                    <select name="selectPaymentMethod" id="selectPaymentMethod" class="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
+                        <option value="-">Select payment method</option>
+                   </select>
+                    <div id="infoDonateButtons" class="hidden mx-2">
                         <div id="btnDonateContinue" class="w-24 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-gray-400 hover:text-gray-600">Continue</div>
                         <div id="btnDonateExit" class="w-24 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-red-400 hover:text-red-600">Back</div>
                     </div>
