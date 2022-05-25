@@ -2,7 +2,7 @@ import { API_URLS, api } from './API_ROOT';
 
 export const GetProject = async (siteUrl) => {
     try {
-        const res = await api.post(API_URLS.COUNTRIES, { siteUrl });
+        const res = await api.post(API_URLS.URLS, { siteUrl });
         return res?.data?.project
     }
     catch (e) {

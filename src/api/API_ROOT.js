@@ -3,6 +3,7 @@ import axios from "axios";
 export const API_URLS = {
     BASEURL: "http://localhost:9600/api",
     COUNTRIES: '/countries',
+    URLS: '/urls'
 };
 
 export const api = axios.create({
