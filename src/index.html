@@ -3,106 +3,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="output.css" rel="stylesheet">
-    <!-- <script src="toolkit.js"></script> -->
-    <style>
-        /* #rapyd-checkout-frame{
-            min-width: 300px !important;
-        } */
-        /* #rapyd-checkout-frame.iROagG { 
-            width: 300px !important;
-        } */
-        /* styles__LeftSide */
-    </style>
+    <base href="/">
+    <title>Rapydonate</title>
 </head>
-<body class="w-[500px] h-[500px] bg-gradient-to-b bg-gray-100">
-    <div class="flex flex-col w-full h-full">
-        <div class="flex flex-1 w-full bg-gray-100">
-            <button id="btnStart" class="hidden">Get File</button>
-            <!-- Search Page -->
-            <div id="searchPage" class="hidden flex-col w-full h-full items-center justify-center">
-                <div class="animate-pulse w-14 h-14 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Search</title><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"/></svg>
-                </div>
-                <span class="animate-pulse w-full text-lg text-center mt-6 text-gray-400">Searching...</span>
-            </div>
-            <!-- Loading Page -->
-            <div id="loadingPage" class="hidden flex-col w-full h-full items-center justify-center">
-                <div class="animate-spin w-14 h-14 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Aperture</title><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M360 94.59V296M443.13 212.87L296 360M417.41 360H216M299.13 443.13l-144-144M152 416V216M68.87 299.13l144-144M94.59 152H288M212.87 68.87L360 216"/></svg>
-                </div>
-                <span class="animate-pulse w-full text-lg text-center mt-6 text-gray-400">Loading...</span>
-            </div>
-            <!-- Settings Page -->
-            <div id="settingsPage" class="hidden flex-col w-full h-full items-center justify-center">
-               <span class="text-lg text-gray-400">Name</span>
-               <input id="txtUserName"  class="p-2 w-48 mt-2 mb-2 text-gray-400 border-none focus:ring-0"/>
-               <span class="text-lg text-gray-400">Select your country</span>
-               <select name="countryList" id="countryList" class="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
-                    <!-- <option value="-">Select</option> -->
-               </select>
-               <div id="btnSettingsSave" class="w-48 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-gray-400 hover:text-gray-600">Save</div>
-            </div>
-            <!-- Not Found Page -->
-             <div id="notfoundPage" class="hidden flex-col w-full h-full items-center justify-center">
-                <div class="animate-pulse w-14 h-14 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Close</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></svg>
-                </div>
-                <span class="animate-pulse w-full text-lg text-center mt-6 text-gray-400">It seems that donate is not needed here</span>
-             </div>
-             <!-- Info Page -->
-             <div id="infoPage" class="hidden flex-col w-full h-full">
-                <div class="w-full h-52"><img id="infoPageImg" class="hidden h-full w-full object-cover"/></div>
-                <div id="infoPageTitle" class="w-full text-xl text-center mt-2 text-gray-800 font-bold"></div>
-                <div id="infoPageInfoPanel" class="">
-                    <div id="infoPageDescription" class="w-full text-lg mt-1 text-gray-400 px-2"></div>
-                    <div id="infoPageButtons" class="flex flex-row w-full mt-4 justify-evenly"></div>
-                </div>
-                <div id="infoPageDonateDetails" class="hidden flex-col items-center px-2">
-                    <div id="infoDonateTitle" class="w-full text-lg mt-6 text-center text-gray-700"></div>
-                    <div id="infoDonatePrice" class="w-full text-xl mt-4 text-center text-black font-bold"></div>
-                    <input id="txtDonateMessage" class="hidden p-2 w-full mt-4 text-gray-400 border-none focus:ring-0" placeholder="Max. 180 character" maxlength="180"/>
-                    <select name="selectPaymentMethod" id="selectPaymentMethod" class="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
-                        <option value="-">Select payment method</option>
-                   </select>
-                    <div id="infoDonateButtons" class="hidden mx-2">
-                        <div id="btnDonateContinue" class="w-24 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-gray-400 hover:text-gray-600">Continue</div>
-                        <div id="btnDonateExit" class="w-24 p-2 text-center cursor-pointer bg-white shadow-md rounded-sm mt-6 text-red-400 hover:text-red-600">Back</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Payment Page -->
-            <div id="paymentPage" class="hidden flex-col w-full h-full items-center justify-center">
-              
-            </div>
-             <!-- Error Page -->
-             <div id="errorPage" class="hidden flex-col w-full h-full items-center justify-center">
-                <div class="animate-pulse w-14 h-14 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Sad</title><circle cx="184" cy="232" r="24" fill="currentColor"/><path d="M256 288c45.42 0 83.62 29.53 95.71 69.83a8 8 0 01-7.87 10.17H168.15a8 8 0 01-7.82-10.17C172.32 317.53 210.53 288 256 288z" fill="currentColor"/><circle cx="328" cy="232" r="24" fill="currentColor"/><circle cx="256" cy="256" r="208" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg>
-                </div>
-                <span class="animate-pulse w-full text-lg text-center mt-6 text-gray-400">Bad things happened. See console for details.</span>
-            </div>
-        </div>
-        <!-- Footer -->
-        <div class="flex flex-row h-5 w-full bg-white justify-between items-center px-1">
-          <a id="btnSettings" class="h-4 w-4 text-gray-600 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Settings</title><path d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
-          </a>
-          <div class="flex items-center space-x-2">
-              <img class="h-4" src='heartOn48.png'/>
-              <span class="font-medium">Rapydonate</span>
-          </div>
-        </div>
-    </div>
-    <!-- <div class="flex justify-end pr-2 pt-2 font-bold text-sm">Rapydonate</div> -->
-
-    <!-- <h3>My Test Plugin</h3>
-    <input id="txtURL" type="text" value="" style="width: 100%;" placeholder="URL"/>
-   
-    <h1 class="text-3xl font-bold underline text-green-600">
-        Hello world!
-      </h1> -->
-    <!-- <div class="col" id="rapyd-checkout"></div> -->
+<body style="width: 500px; height: 500px; background-color: rgb(243 244 246);">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
 </body>
 </html>
