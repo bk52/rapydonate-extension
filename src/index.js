@@ -2,6 +2,7 @@ import { GetProject } from './api/Project';
 import React from 'react';
 import ReactDOM from "react-dom";
 import App from './app';
+import { pageInfo } from "./utilities/TabInfo";
 import "./index.css"
 
 chrome.runtime.onMessage.addListener(
@@ -17,5 +18,10 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
+
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    const { id, url } = tabs[0];
+    pageInfo = { id, url }
+});
 
 ReactDOM.render(<App />, document.getElementById("root"));

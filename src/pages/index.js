@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setPage, setSettings, selectPage, selectCountry, selectUsername } from "../redux/appSlice";
-import { GetLocalSettings, SetLocalSettings, ClearLocalSettings } from "../utilities/LocalSettings";
+import { setPage, setSettings, selectPage } from "../redux/appSlice";
+import { GetLocalSettings } from "../utilities/LocalSettings";
+import Footer from "../components/Footer";
 import PAGES from "./Pages";
-import LoadingPage from "./Loading";
+import SettingsPage from "./Settings";
+import InfoPage from "./Info";
+import NotFoundPage from "./NotFound";
 
 const GetPage = (pagename) => {
     switch (pagename) {
-        case PAGES.Loading:
-            return <div>Loading</div>
         case PAGES.Settings:
-            return <div>Settings</div>
+            return <SettingsPage />
         case PAGES.NotFound:
-            return <div>Not Found</div>
+            return <NotFoundPage />
         case PAGES.Info:
-            return <div>Info</div>
+            return <InfoPage />
         case PAGES.ErrorPage:
             return <div>Error Page</div>
         case PAGES.Payment:
@@ -25,34 +26,31 @@ const GetPage = (pagename) => {
 const Main = () => {
     const dispatch = useDispatch();
     const activePage = useSelector(selectPage);
-    const username = useSelector(selectUsername);
-    const countryCode = useSelector(selectCountry)
-
     useEffect(() => {
         const ReadSettings = async () => {
             const data = await GetLocalSettings();
-
-            if (!data.settings?.country)
+            if (!data.settings?.countryId)
                 return dispatch(setPage({ page: PAGES.Settings }))
 
             dispatch(setSettings({
-                countryId: data.settings.country.id,
-                countryCode: data.settings.country.code,
-                countryCurrency: data.settings.country.currency_code,
-                userName: data.settings.username
+                countryId: data.settings.countryId,
+                countryCode: data.settings.countryCode,
+                countryCurrency: data.settings.countryCurrency,
+                username: data.settings.username
             }))
-
-            // await url query
-            // if valid -> pageinfo
-            // not found
+            dispatch(setPage({ page: PAGES.Info }))
         }
         ReadSettings();
     }, [])
-    return <>
-        {GetPage(activePage)}
-        <div>username : {username}</div>
-        <div>code : {countryCode}</div>
-    </>
+
+    return <div className="flex flex-col w-full h-full bg-gray-100">
+        <div className="flex flex-1 w-full">
+            {GetPage(activePage)}
+        </div>
+        <Footer />
+    </div>
+
+
 }
 
 export default Main;

@@ -5,8 +5,8 @@ const initialState = {
     countryId: -1,
     countryCode: '',
     countryCurrency: '',
-    userName: '',
-    page: PAGES.Loading
+    username: '',
+    page: PAGES.Info
 };
 
 export const appSlice = createSlice({
@@ -18,17 +18,17 @@ export const appSlice = createSlice({
             state.page = page;
         },
         setSettings: (state, action) => {
-            const { countryId, countryCode, countryCurrency, userName } = action.payload;
-            console.log(countryId, countryCode, countryCurrency, userName)
+            const { countryId, countryCode, countryCurrency, username } = action.payload;
             state.countryId = countryId;
             state.countryCode = countryCode;
             state.countryCurrency = countryCurrency;
-            state.userName = userName;
+            state.username = username;
         }
     }
 });
+
 export const selectPage = (state) => state.app.page;
-export const selectCountry = (state) => { state.app.countryId, state.app.countryCode, state.app.countryCurrency }
-export const selectUsername = (state) => state.app.userName;
+export const selectCountry = (state) => ({ countryId: state.app.countryId, countryCode: state.app.countryCode, countryCurrency: state.app.countryCurrency })
+export const selectUsername = (state) => state.app.username;
 export const { setPage, setSettings } = appSlice.actions;
 export default appSlice.reducer;
