@@ -7,6 +7,7 @@ import PAGES from "./Pages";
 import SettingsPage from "./Settings";
 import InfoPage from "./Info";
 import NotFoundPage from "./NotFound";
+import PaymentPage from "./Payment";
 
 const GetPage = (pagename) => {
     switch (pagename) {
@@ -16,10 +17,8 @@ const GetPage = (pagename) => {
             return <NotFoundPage />
         case PAGES.Info:
             return <InfoPage />
-        case PAGES.ErrorPage:
-            return <div>Error Page</div>
         case PAGES.Payment:
-            return <div>Payment</div>
+            return <PaymentPage />
     }
 }
 

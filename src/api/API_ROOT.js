@@ -5,7 +5,8 @@ export const API_URLS = {
     COUNTRIES: '/countries',
     URLS: '/urls',
     PAYMENT_METHODS: '/paymentmethods',
-    CHECKOUT: '/checkout'
+    CHECKOUT: '/checkout',
+    DONATE: '/donations'
 };
 
 export const api = axios.create({

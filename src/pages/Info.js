@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import LoadingPage from "../components/Loading";
 import { setPage, selectCountry } from "../redux/appSlice";
 import { setProject, selectProject } from "../redux/projectSlice";
+import { setCheckout } from "../redux/checkoutSlice";
 import { GetProject } from "../api/Project";
 import { pageInfo, GetTabInfo } from "../utilities/TabInfo";
 import DonateButton from "../components/DonateButton";
@@ -37,13 +38,10 @@ const Info = () => {
             donate.paymentMethod
         )
 
-        console.log(checkoutId);
-
-        // console.log("projectId", project._id);
-        // console.log("donateTypeId", donate._id);
-        // console.log("countryCode", countryInfo.countryCode);
-        // console.log("countryCurrency", countryInfo.countryCurrency);
-        // console.log("paymentMethod", donate.paymentMethod);
+        if (checkoutId) {
+            dispatch(setCheckout({ checkoutId, donateId: donate._id, message: donate.message, status: 'ACT' }));
+            dispatch(setPage({ page: PAGES.Payment }));
+        }
     }
 
     useEffect(() => {
@@ -83,6 +81,7 @@ const Info = () => {
         }
         GetData();
     }, [])
+
     return loading ? <LoadingPage /> : <div className="flex flex-col w-full h-full">
         {project.imageURL != '' && <div className="w-full h-52"><img src={project.imageURL} className="h-full w-full object-cover" /></div>}
         <div className="w-full text-xl text-center mt-2 text-gray-800 font-bold">{project.title}</div>
@@ -91,7 +90,7 @@ const Info = () => {
                 <div className="flex flex-col items-center px-2">
                     <div className="w-full text-lg mt-6 text-center text-gray-700">{donate.title}</div>
                     <div className="w-full text-xl mt-4 text-center text-black font-bold">{donate.price} $</div>
-                    {donate.donateType === 'message' && <input className="p-2 w-full mt-4 text-gray-400 border-none focus:ring-0" placeholder="Max. 180 character" maxlength="180" />}
+                    {donate.donateType === 'message' && <input name="message" onChange={(e) => { setDonate(prevState => ({ ...prevState, 'message': e.target.value })) }} value={donate.message} className="p-2 w-full mt-4 text-gray-400 border-none focus:ring-0" placeholder="Max. 180 character" maxlength="180" />}
                     <select value={donate?.paymentMethod} onChange={(e) => { setDonate(prevState => ({ ...prevState, 'paymentMethod': e.target.value })) }} name="paymentMethod" className="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
                         {
                             methods.map((item, index) => {
