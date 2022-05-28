@@ -4,7 +4,8 @@ export const API_URLS = {
     BASEURL: "http://localhost:9600/api",
     COUNTRIES: '/countries',
     URLS: '/urls',
-    PAYMENT_METHODS: '/paymentmethods'
+    PAYMENT_METHODS: '/paymentmethods',
+    CHECKOUT: '/checkout'
 };
 
 export const api = axios.create({

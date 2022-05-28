@@ -66,7 +66,7 @@ const Settings = () => {
 
     return loading ? <Loading /> : <div className="flex flex-col w-full h-full items-center justify-center">
         <span className="text-lg text-gray-400">Name</span>
-        <input name="username" value={userInfo.username} onChange={onChange} class="p-2 w-48 mt-2 mb-2 text-gray-400 border-none focus:ring-0" />
+        <input name="username" value={userInfo.username} onChange={onChange} className="p-2 w-48 mt-2 mb-2 text-gray-400 border-none focus:ring-0" />
         <span className="text-lg text-gray-400">Select your country</span>
         <select name="country" value={userInfo.country} onChange={onChange} className="p-2 w-48 mt-2 text-gray-400 border-none focus:ring-0">
             {
