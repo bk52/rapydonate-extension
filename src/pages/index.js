@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { setPage, setSettings, selectPage } from "../redux/appSlice";
-import { GetLocalSettings } from "../utilities/LocalSettings";
+import { GetLocalSettings, ClearLocalSettings } from "../utilities/LocalSettings";
 import Footer from "../components/Footer";
 import PAGES from "./Pages";
 import SettingsPage from "./Settings";
