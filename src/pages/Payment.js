@@ -24,6 +24,12 @@ const Payment = () => {
     const projectState = useSelector(selectProject);
     const username = useSelector(selectUsername);
 
+    const RemoveListeners = () => {
+        window.removeEventListener('onCheckoutPaymentSuccess', paymentFeedback);
+        window.removeEventListener('onCheckoutFailure', paymentFeedback);
+        window.removeEventListener('onCheckoutPaymentFailure', paymentFeedback);
+    }
+
     useEffect(() => {
         if (checkout?.checkoutId !== '') {
             try {
@@ -49,6 +55,7 @@ const Payment = () => {
     }, [checkout?.checkoutId])
 
     const paymentFeedback = async (e) => {
+        RemoveListeners();
         if (e.detail.error) {
             setPaymentStatus({ status: PAYMENT_STATUS.Error, message: e.detail.error })
         }
@@ -68,12 +75,7 @@ const Payment = () => {
         window.addEventListener('onCheckoutPaymentSuccess', paymentFeedback);
         window.addEventListener('onCheckoutFailure', paymentFeedback);
         window.addEventListener('onCheckoutPaymentFailure', paymentFeedback);
-        return () => {
-            window.removeEventListener('onCheckoutPaymentSuccess', paymentFeedback);
-            window.removeEventListener('onCheckoutFailure', paymentFeedback);
-            window.removeEventListener('onCheckoutPaymentFailure', paymentFeedback);
-        };
-
+        return () => { RemoveListeners() };
     }, [])
 
     return <div className="flex flex-col w-full h-full items-center justify-center">
